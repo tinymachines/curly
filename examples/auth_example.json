@@ -1,0 +1,8 @@
+{
+  "url": "https://httpbin.org/basic-auth/user/pass",
+  "auth": {
+    "type": "basic",
+    "username": "user",
+    "password": "pass"
+  }
+}

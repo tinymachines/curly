@@ -1,0 +1,84 @@
++ RED='\033[0;31m'
++ GREEN='\033[0;32m'
++ YELLOW='\033[0;33m'
++ NC='\033[0m'
++ main
++ print_status 'Starting curly setup...'
++ echo -e '\033[0;32m[+] Starting curly setup...\033[0m'
+[0;32m[+] Starting curly setup...[0m
++ check_dependencies
++ print_status 'Checking dependencies...'
++ echo -e '\033[0;32m[+] Checking dependencies...\033[0m'
+[0;32m[+] Checking dependencies...[0m
++ local missing_deps=0
++ command -v gcc
++ command -v make
++ pkg-config --libs libcurl
++ '[' 0 -ne 0 ']'
++ pkg-config --libs jansson
++ '[' 0 -ne 0 ']'
++ '[' 0 -eq 1 ']'
++ print_status 'All dependencies are installed.'
++ echo -e '\033[0;32m[+] All dependencies are installed.\033[0m'
+[0;32m[+] All dependencies are installed.[0m
++ build_project
++ print_status 'Building curly...'
++ echo -e '\033[0;32m[+] Building curly...\033[0m'
+[0;32m[+] Building curly...[0m
++ rm -rf build bin
++ mkdir -p build bin
++ chmod 755 build bin
++ make
+mkdir -p build bin
+gcc -Wall -Wextra -Werror -std=c99 -I./include -c src/curly.c -o build/curly.o
+gcc -Wall -Wextra -Werror -std=c99 -I./include -c src/main.c -o build/main.o
+gcc -Wall -Wextra -Werror -std=c99 -I./include build/curly.o build/main.o -o bin/curly -lcurl -ljansson
++ '[' 0 -ne 0 ']'
++ print_status 'Build completed successfully.'
++ echo -e '\033[0;32m[+] Build completed successfully.\033[0m'
+[0;32m[+] Build completed successfully.[0m
++ run_tests
++ print_status 'Running tests...'
++ echo -e '\033[0;32m[+] Running tests...\033[0m'
+[0;32m[+] Running tests...[0m
++ make test
+mkdir -p build bin
+gcc -Wall -Wextra -Werror -std=c99 -I./include -c tests/test_curly.c -o build/test_test_curly.o
+gcc -Wall -Wextra -Werror -std=c99 -I./include build/curly.o build/test_test_curly.o -o bin/run_tests -lcurl -ljansson
+./bin/run_tests 
+JSON parse error: invalid token near 'https'
+Running test_parse_config_basic...
+test_parse_config_basic: PASSED
+Running test_parse_config_full...
+test_parse_config_full: PASSED
+Running test_error_handling...
+test_error_handling: PASSED
+
+All tests completed successfully!
++ '[' 0 -ne 0 ']'
++ print_status 'All tests passed successfully.'
++ echo -e '\033[0;32m[+] All tests passed successfully.\033[0m'
+[0;32m[+] All tests passed successfully.[0m
++ '[' '' == -i ']'
++ '[' '' == --install ']'
++ print_warning 'Binary not installed to system. To install, run:'
++ echo -e '\033[0;33m[!] Binary not installed to system. To install, run:\033[0m'
+[0;33m[!] Binary not installed to system. To install, run:[0m
++ print_warning 'sudo ./build.sh --install'
++ echo -e '\033[0;33m[!] sudo ./build.sh --install\033[0m'
+[0;33m[!] sudo ./build.sh --install[0m
++ print_status 'Setup complete!'
++ echo -e '\033[0;32m[+] Setup complete!\033[0m'
+[0;32m[+] Setup complete![0m
++ print_status 'You can run curly locally with: ./bin/curly'
++ echo -e '\033[0;32m[+] You can run curly locally with: ./bin/curly\033[0m'
+[0;32m[+] You can run curly locally with: ./bin/curly[0m
++ echo
+
++ print_status 'Example usage:'
++ echo -e '\033[0;32m[+] Example usage:\033[0m'
+[0;32m[+] Example usage:[0m
++ echo '  ./bin/curly -f examples/basic_get.json'
+  ./bin/curly -f examples/basic_get.json
++ echo '  ./bin/curly -s '\''{"url":"https://httpbin.org/get"}'\'''
+  ./bin/curly -s '{"url":"https://httpbin.org/get"}'

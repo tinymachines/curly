@@ -1,0 +1,12 @@
+{
+  "url": "https://httpbin.org/post",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  "data": {
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
