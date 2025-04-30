@@ -31,7 +31,7 @@ Curly translates JSON configurations into appropriate cURL commands, executes th
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/curly.git
+git clone https://github.com/tinymachines/curly.git
 cd curly
 
 # Build the project
