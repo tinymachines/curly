@@ -106,14 +106,13 @@ run_tests() {
     print_status "All tests passed successfully."
 }
 
-# Install to /usr/bin
+# Install using make install
 install_binary() {
-    print_status "Installing curly to /usr/bin..."
+    print_status "Installing curly system-wide..."
     check_root
-    cp bin/curly /usr/bin/
-    chmod 755 /usr/bin/curly
+    make install
     
-    print_status "Installation completed. You can now run 'curly' from anywhere."
+    print_status "Installation completed. You can now run 'curly' and 'curly_parallel' from anywhere."
 }
 
 # Main script
@@ -145,6 +144,7 @@ main() {
     print_status "Example usage:"
     echo "  ./bin/curly -f examples/basic_get.json"
     echo "  ./bin/curly -s '{\"url\":\"https://httpbin.org/get\"}'"
+    echo "  ./bin/curly_parallel -i examples/parallel_download.tsv -t 4"
 }
 
 # Execute main function with all arguments

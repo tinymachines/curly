@@ -8,6 +8,12 @@ BUILD_DIR = build
 BIN_DIR = bin
 TEST_DIR = tests
 
+# Installation paths
+PREFIX ?= /usr/local
+BINDIR = $(PREFIX)/bin
+MANDIR = $(PREFIX)/share/man/man1
+DOCDIR = $(PREFIX)/share/doc/curly
+
 TARGET = $(BIN_DIR)/curly
 PARALLEL_TARGET = $(BIN_DIR)/curly_parallel
 TEST_TARGET = $(BIN_DIR)/run_tests
@@ -24,7 +30,7 @@ PARALLEL_MAIN_OBJ = $(BUILD_DIR)/main_parallel.o
 TEST_SRC_FILES = $(wildcard $(TEST_DIR)/*.c)
 TEST_OBJ_FILES = $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/test_%.o,$(TEST_SRC_FILES))
 
-.PHONY: all parallel clean test memcheck
+.PHONY: all parallel clean test memcheck install uninstall
 
 all: setup $(TARGET) $(PARALLEL_TARGET)
 
@@ -51,6 +57,22 @@ $(TEST_TARGET): $(CORE_OBJ_FILES) $(TEST_OBJ_FILES)
 
 memcheck: $(TARGET)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(TARGET)
+
+install: all
+	install -d $(DESTDIR)$(BINDIR)
+	install -m 755 $(TARGET) $(DESTDIR)$(BINDIR)
+	install -m 755 $(PARALLEL_TARGET) $(DESTDIR)$(BINDIR)
+	install -d $(DESTDIR)$(DOCDIR)
+	install -m 644 README.md LICENSE $(DESTDIR)$(DOCDIR)
+	cp -r examples $(DESTDIR)$(DOCDIR)
+	@echo "Installation completed to $(DESTDIR)$(PREFIX)"
+	@echo "You can now run: curly, curly_parallel"
+
+uninstall:
+	rm -f $(DESTDIR)$(BINDIR)/curly
+	rm -f $(DESTDIR)$(BINDIR)/curly_parallel
+	rm -rf $(DESTDIR)$(DOCDIR)
+	@echo "Uninstallation completed"
 
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)

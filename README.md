@@ -36,10 +36,16 @@ git clone https://github.com/tinymachines/curly.git
 cd curly
 
 # Build the project
-./build.sh
+make
 
-# Install (optional)
-sudo ./build.sh --install
+# Run tests (optional)
+make test
+
+# Install system-wide (optional)
+sudo make install
+
+# Uninstall if needed
+sudo make uninstall
 ```
 
 ## Quick Start
