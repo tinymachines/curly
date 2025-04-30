@@ -1,0 +1,17 @@
+# Sample file list for batch download
+# Each line contains a filename to download
+# Empty lines and comments (lines starting with #) are ignored
+
+# Images
+sample1.jpg
+sample2.png
+sample3.webp
+
+# Documents
+docs/report.pdf
+docs/presentation.pptx
+
+# Data files
+data/records.csv
+data/config.json
+data/schema.xml

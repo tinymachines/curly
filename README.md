@@ -116,6 +116,14 @@ curly_parallel -i urls.tsv -t 16
 
 The tool will create necessary directories, download all files in parallel, and report progress.
 
+#### Example Scripts
+
+Several example scripts are provided in the `examples/` directory to demonstrate practical usage:
+
+- `batch_download.sh` - Basic batch downloading from a list of files
+- `dynamic_download.sh` - Advanced dynamic batch generation and downloading
+- `github_releases.sh` - Download assets from GitHub releases in parallel
+
 ## Documentation
 
 For more detailed information, see:
