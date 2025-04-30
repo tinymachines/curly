@@ -17,6 +17,7 @@ Curly translates JSON configurations into appropriate cURL commands, executes th
 - ⏱️ **Timeout control** - Configure request timeouts
 - 🔄 **Redirect handling** - Control redirect behavior
 - 🔍 **Verbose mode** - Detailed output for debugging
+- 🚀 **Parallel downloads** - Process thousands of downloads concurrently
 
 ## Installation
 
@@ -92,6 +93,28 @@ curly -s '{"url":"https://httpbin.org/get"}'
   }
 }
 ```
+
+### Parallel Downloading
+
+For downloading multiple files in parallel, use the `curly_parallel` tool. Create a TSV file with URLs and destination paths:
+
+```
+https://example.com/file1.jpg	./downloads/file1.jpg
+https://example.com/file2.jpg	./downloads/file2.jpg
+https://example.com/file3.jpg	./downloads/file3.jpg
+```
+
+Then run:
+
+```bash
+# Use 8 download threads, read from stdin
+cat urls.tsv | curly_parallel -t 8
+
+# Or specify an input file
+curly_parallel -i urls.tsv -t 16
+```
+
+The tool will create necessary directories, download all files in parallel, and report progress.
 
 ## Documentation
 

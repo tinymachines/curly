@@ -18,6 +18,8 @@ typedef enum {
     CURLY_ERROR_CURL_INIT,          // Failed to initialize libcurl
     CURLY_ERROR_CURL_PERFORM,       // Failed to perform curl request
     CURLY_ERROR_MEMORY_ALLOCATION,  // Memory allocation failed
+    CURLY_ERROR_FILE_OPEN,          // Failed to open file
+    CURLY_ERROR_THREAD_CREATE,      // Failed to create thread
     CURLY_ERROR_UNKNOWN             // Unknown error
 } curly_error_t;
 ```
@@ -146,6 +148,60 @@ const char *curly_strerror(curly_error_t error);
 
 **Returns**:
 - String description of the error
+
+#### curly_download_file
+
+Download file from URL to destination path.
+
+```c
+curly_error_t curly_download_file(const char *url, const char *destination);
+```
+
+**Parameters**:
+- `url`: URL to download from
+- `destination`: Path to save the file to
+
+**Returns**:
+- `CURLY_OK` on success
+- Error code otherwise
+
+**Example**:
+```c
+curly_error_t error = curly_download_file("https://example.com/file.jpg", "./downloads/file.jpg");
+if (error != CURLY_OK) {
+    fprintf(stderr, "Download failed: %s\n", curly_strerror(error));
+    return 1;
+}
+```
+
+#### curly_parallel_download
+
+Process parallel downloads from TSV input (URL, destination).
+
+```c
+curly_error_t curly_parallel_download(int thread_count, FILE *input_stream);
+```
+
+**Parameters**:
+- `thread_count`: Number of parallel download threads to use
+- `input_stream`: Input stream to read TSV data from (typically stdin)
+
+**Returns**:
+- `CURLY_OK` on success
+- Error code if initialization fails
+
+**Example**:
+```c
+// Using stdin as input
+curly_error_t error = curly_parallel_download(8, stdin);
+
+// Using a file as input
+FILE *file = fopen("downloads.tsv", "r");
+if (file) {
+    error = curly_parallel_download(16, file);
+    fclose(file);
+}
+```
 
 ## JSON Configuration Format
 

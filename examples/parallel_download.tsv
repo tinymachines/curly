@@ -1,0 +1,8 @@
+https://httpbin.org/image/jpeg	./downloads/test1.jpg
+https://httpbin.org/image/png	./downloads/test2.png
+https://httpbin.org/image/svg	./downloads/test3.svg
+https://httpbin.org/image/webp	./downloads/test4.webp
+https://httpbin.org/json	./downloads/data/test.json
+https://httpbin.org/xml	./downloads/data/test.xml
+https://httpbin.org/html	./downloads/data/test.html
+https://httpbin.org/robots.txt	./downloads/robots.txt

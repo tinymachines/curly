@@ -8,6 +8,7 @@
 #include <string.h>
 #include <curl/curl.h>
 #include <jansson.h>
+#include <pthread.h>
 
 /**
  * Error codes for Curly library
@@ -19,6 +20,8 @@ typedef enum {
     CURLY_ERROR_CURL_INIT,
     CURLY_ERROR_CURL_PERFORM,
     CURLY_ERROR_MEMORY_ALLOCATION,
+    CURLY_ERROR_FILE_OPEN,
+    CURLY_ERROR_THREAD_CREATE,
     CURLY_ERROR_UNKNOWN
 } curly_error_t;
 
@@ -87,5 +90,23 @@ void curly_free_response(curly_response_t *response);
  * @return String description of the error
  */
 const char *curly_strerror(curly_error_t error);
+
+/**
+ * Download file from URL to destination path
+ *
+ * @param url URL to download from
+ * @param destination Path to save the file to
+ * @return CURLY_OK on success, error code otherwise
+ */
+curly_error_t curly_download_file(const char *url, const char *destination);
+
+/**
+ * Process parallel downloads from TSV input (URL, destination)
+ *
+ * @param thread_count Number of parallel download threads to use
+ * @param input_stream Input stream to read TSV data from (typically stdin)
+ * @return CURLY_OK on success, error code if initialization fails
+ */
+curly_error_t curly_parallel_download(int thread_count, FILE *input_stream);
 
 #endif /* CURLY_H */

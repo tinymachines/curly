@@ -421,6 +421,10 @@ const char *curly_strerror(curly_error_t error) {
             return "Failed to perform curl request";
         case CURLY_ERROR_MEMORY_ALLOCATION:
             return "Memory allocation failed";
+        case CURLY_ERROR_FILE_OPEN:
+            return "Failed to open file";
+        case CURLY_ERROR_THREAD_CREATE:
+            return "Failed to create thread";
         case CURLY_ERROR_UNKNOWN:
         default:
             return "Unknown error";
